@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoRestaurant } from 'react-icons/io5';
+import { BsGearWideConnected } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -9,9 +9,9 @@ const Footer = () => {
                 <div className="lg:w-1/3">
                     <Link to='/' rel="noopener noreferrer" className="flex text-secondary  text-xl md:text-2xl justify-center space-x-3 lg:justify-start">
                         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white">
-                        <IoRestaurant />
+                        <BsGearWideConnected />
                         </div>
-                        <span className="self-center text-2xl text-white font-semibold">Flavor Fusion</span>
+                        <span className="self-center text-2xl text-white font-semibold">Connect Sphere</span>
                     </Link>
                 </div>
                 <div className="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-4">
