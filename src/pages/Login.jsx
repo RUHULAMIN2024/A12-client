@@ -1,16 +1,16 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthProvider/AuthProvider";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 
 const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false);
-    const { loginUser, googleLogin, githubLogin } = useContext(AuthContext);
+    const { loginUser, googleLogin, githubLogin } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
 

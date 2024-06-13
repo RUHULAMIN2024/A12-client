@@ -1,8 +1,9 @@
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
     return (
         <div>
-            <Helmet><title>Connect Sphere | Error</title></Helmet>
+            <Helmet><title>Connect Sphere | Home</title></Helmet>
 
             ruhul amin
 

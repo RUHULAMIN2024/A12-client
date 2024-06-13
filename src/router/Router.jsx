@@ -4,6 +4,10 @@ import Home from "../pages/Home";
 import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Dashboard from "../layout/Dashboard";
+import Profile from "../pages/Profile";
+import AddPost from "../pages/AddPost";
+import MyPost from "../pages/MyPost";
 
 
 
@@ -24,6 +28,24 @@ const router = createBrowserRouter([
         {
           path:"/register",
           element:<Register></Register>,
+        },
+        {
+          path:"/dashboard",
+          element:<Dashboard></Dashboard>,
+          children:[
+            {
+              path:"my-profile",
+              element:<Profile></Profile>,
+            },
+            {
+              path:"add-post",
+              element:<AddPost></AddPost>,
+            },
+            {
+              path:"my-post",
+              element:<MyPost></MyPost>,
+            },
+          ]
         },
         
          

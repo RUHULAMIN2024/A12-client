@@ -70,9 +70,8 @@ const Nav = () => {
               </div>
               <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
 
-                <li><Link to="/my-food" className="btn btn-sm md:btn-md btn-ghost">My added food items</Link></li>
-                <li><Link to='/add-food' className="btn btn-sm md:btn-md btn-ghost">Add a food item</Link></li>
-                <li><Link to='/my-order' className="btn btn-sm md:btn-md btn-ghost">My ordered food items</Link></li>
+                <li><button className="btn btn-sm md:btn-md btn-ghost">{userInfo?.displayName}</button></li>
+                <li><Link to='/dashboard' className="btn btn-sm md:btn-md btn-ghost">Dashboard</Link></li>
                 <li><button onClick={() => logout()} className="btn mr-3  btn-sm md:btn-md text-white hover:text-primary bg-primary">Logout</button>
                 </li>
               </ul>

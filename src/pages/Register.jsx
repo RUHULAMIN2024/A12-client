@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, } from "react-router-dom";
-import { AuthContext } from "../AuthProvider/AuthProvider";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 const Register = () => {
 
-    const {userInfo, setUserInfo, createUser, userUpdate } = useContext(AuthContext)
+    const {userInfo, setUserInfo, createUser, userUpdate } = useAuth()
 
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
