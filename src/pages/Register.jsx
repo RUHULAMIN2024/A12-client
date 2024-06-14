@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Register = () => {
 
-    const {userInfo, setUserInfo, createUser, userUpdate } = useAuth()
+    const navigate=useNavigate()
+    const axiosPublic = useAxiosPublic();
+    const { userInfo, setUserInfo, createUser, userUpdate } = useAuth()
 
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -40,20 +43,34 @@ const Register = () => {
         createUser(email, password)
             .then(result => {
                 userUpdate(name, photo)
-                setUserInfo({...result?.user, photoURL:photo, displayName:name})
-                Swal.fire({
-                    title: "success",
-                    text: "Registered Successfully ",
-                    icon: "success"
-
-                });
+                setUserInfo({ ...result?.user, photoURL: photo, displayName: name })
+                const user = {
+                    name: name,
+                    email: email,
+                    photo: photo,
+                    badge: 'Bronze'
+                }
+                axiosPublic.post('/users', user)
+                .then(res=>{
+                    if(res.data.insertedId){
+                    
+                        Swal.fire({
+                            title: "success",
+                            text: "Registered Successfully ",
+                            icon: "success"
+        
+                        });
+navigate('/')
+                    }
+                })
+                
             })
             .catch(error => {
                 Swal.fire({
                     title: 'Error!',
                     text: `${error.message}`,
                     icon: 'error'
-                  })
+                })
                 console.log(error)
             })
 

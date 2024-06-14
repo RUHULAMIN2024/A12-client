@@ -5,9 +5,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const Login = () => {
+
+    const axiosPublic = useAxiosPublic();
 
     const [showPassword, setShowPassword] = useState(false);
     const { loginUser, googleLogin, githubLogin } = useAuth();
@@ -81,8 +84,30 @@ const Login = () => {
                 <p>======continue with=======</p>
             </div>
             <div className="flex justify-between">
-                <button className="btn btn-outline" onClick={() => googleLogin().then(result => { navigate(location?.state ? location.state : '/') })}>Google</button>
-                <button className="btn btn-outline" onClick={() => githubLogin().then(result => { navigate(location?.state ? location.state : '/') })}>Github</button>
+                <button className="btn btn-outline" onClick={() => googleLogin().then(result => {
+                    const user = {
+                        name: result.user?.displayName,
+                        email: result.user?.email,
+                        photo: result.user?.photoURL,
+                        badge: 'Bronze'
+                    }
+                    axiosPublic.post('/users', user)
+                    .then(res=>{
+                        console.log(res.data)
+                    }) 
+                    navigate(location?.state ? location.state : '/') })}>Google</button>
+                <button className="btn btn-outline" onClick={() => githubLogin().then(result => { 
+                    const user = {
+                        name: result.user?.displayName,
+                        email: result.user?.email,
+                        photo: result.user?.photoURL,
+                        badge: 'Bronze'
+                    }
+                    axiosPublic.post('/users', user)
+                    .then(res=>{
+                        console.log(res.data)
+                    }) 
+                    navigate(location?.state ? location.state : '/') })}>Github</button>
             </div>
         </div>
     );

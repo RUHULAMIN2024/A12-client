@@ -72,7 +72,7 @@ const Nav = () => {
 
                 <li><button className="btn btn-sm md:btn-md btn-ghost">{userInfo?.displayName}</button></li>
                 <li><Link to='/dashboard' className="btn btn-sm md:btn-md btn-ghost">Dashboard</Link></li>
-                <li><button onClick={() => logout()} className="btn mr-3  btn-sm md:btn-md text-white hover:text-primary bg-primary">Logout</button>
+                <li><button onClick={() => logout()} className="btn btn-sm md:btn-md text-white hover:text-primary bg-primary">Logout</button>
                 </li>
               </ul>
             </div>

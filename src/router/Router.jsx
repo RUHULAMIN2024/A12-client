@@ -8,6 +8,7 @@ import Dashboard from "../layout/Dashboard";
 import Profile from "../pages/Profile";
 import AddPost from "../pages/AddPost";
 import MyPost from "../pages/MyPost";
+import PrivetRoute from "./PrivetRoute";
 
 
 
@@ -30,8 +31,8 @@ const router = createBrowserRouter([
           element:<Register></Register>,
         },
         {
-          path:"/dashboard",
-          element:<Dashboard></Dashboard>,
+          path:"dashboard",
+          element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
           children:[
             {
               path:"my-profile",
