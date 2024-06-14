@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
             setUserInfo(user)
             setLoding(false);
             if(user){
-                axios.post(`${import.meta.env.VITE_API_URL}/jwt`, loggedUser,{withCredentials:true})
+                axios.post(`${import.meta.env.VITE_API_URL}/jwt`, loggedUser)
                 .then(res=>{
                     console.log(res.data)
                 })

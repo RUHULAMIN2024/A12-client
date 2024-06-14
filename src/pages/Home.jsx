@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
+import Banner from "../components/Banner";
 
 const Home = () => {
     return (
-        <div>
+        <div className="container mx-auto">
             <Helmet><title>Connect Sphere | Home</title></Helmet>
-
-            ruhul amin
+            <Banner></Banner>
 
         </div>
     );
