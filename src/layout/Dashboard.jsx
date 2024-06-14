@@ -5,20 +5,42 @@ import { MdLocalActivity } from "react-icons/md";
 
 
 const Dashboard = () => {
+
+
+    const isAdmin = true;
+
     return (
-        <div className="flex gap-5"> 
+        <div className="flex gap-5">
             <div className="w-64 p-4 min-h-[calc(100vh-368px)] bg-orange-400">
                 <ul>
-                    <li className="flex items-center space-x-1">
+                    {
+                        isAdmin ?<>
+                        <li className="flex items-center space-x-1">
                         <CgProfile />
-                        <NavLink to="/dashboard/my-profile">My Profile</NavLink>
+                        <NavLink to="/dashboard/admin-profile" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>Admin Profile</NavLink>
                     </li>
                     <li className="flex items-center space-x-1">
                         <MdPostAdd />
-                        <NavLink to="/dashboard/add-post">Add Post</NavLink></li>
+                        <NavLink to="/dashboard/manage-users" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>Manage Users</NavLink></li>
                     <li className="flex items-center space-x-1">
                         <MdLocalActivity />
-                        <NavLink to="/dashboard/my-post">My Posts</NavLink></li>
+                        <NavLink to="/dashboard/reported--activities" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>Reported Activities</NavLink></li>
+                    <li className="flex items-center space-x-1">
+                        <MdLocalActivity />
+                        <NavLink to="/dashboard/make-announcement" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>Make Announcement</NavLink></li>
+                        </>: <>
+                            <li className="flex items-center space-x-1">
+                                <CgProfile />
+                                <NavLink to="/dashboard/my-profile" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>My Profile</NavLink>
+                            </li>
+                            <li className="flex items-center space-x-1">
+                                <MdPostAdd />
+                                <NavLink to="/dashboard/add-post" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>Add Post</NavLink></li>
+                            <li className="flex items-center space-x-1">
+                                <MdLocalActivity />
+                                <NavLink to="/dashboard/my-post" className={({ isActive }) => isActive ? 'text-white bg-primary py-2  px-3 rounded-md font-bold' : 'font-bold px-3 py-2'}>My Posts</NavLink></li>
+                        </>
+                    }
                 </ul>
             </div>
             <div className="flex-1">
