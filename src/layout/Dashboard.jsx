@@ -13,6 +13,8 @@ const Dashboard = () => {
 
     return (
         <div className="flex gap-5">
+            <Helmet><title>Connect Sphere | Dashboard</title></Helmet>
+
             <div className="w-64 p-4 min-h-[calc(100vh-368px)] bg-orange-400">
                 <ul>
                     {
