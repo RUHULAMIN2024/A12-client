@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { BsGearWideConnected } from "react-icons/bs";
 import { MdNotificationsActive } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Nav = () => {
@@ -136,7 +137,15 @@ const Nav = () => {
                 </li>
                 <li>
                   <button
-                    onClick={() => logout()}
+                    onClick={() => {
+                      logout()
+                        .then(() => {
+                          toast.success("logout success!");
+                        })
+                        .catch(() => {
+                          toast.error("An error occurred!");
+                        });
+                    }}
                     className="btn btn-sm md:btn-md text-white hover:text-primary bg-primary"
                   >
                     Logout

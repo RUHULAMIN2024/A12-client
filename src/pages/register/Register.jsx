@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
@@ -49,32 +49,17 @@ const Register = () => {
             };
             axiosPublic.post("/users", newUserCreate).then((res) => {
               if (res.data.insertedId) {
-                Swal.fire({
-                  title: "success",
-                  text: "Registered Successfully ",
-                  icon: "success",
-                  timer: 1000,
-                });
+                toast.success("User created successfully");
               }
             });
             navigate(from);
           })
           .catch(() => {
-            Swal.fire({
-              title: "Error",
-              text: "An error occurred",
-              icon: "error",
-              timer: 1000,
-            });
+            toast.error("An error occurred");
           });
       })
       .catch(() => {
-        Swal.fire({
-          title: "Error",
-          text: "An error occurred",
-          icon: "error",
-          timer: 1000,
-        });
+        toast.error("An error occurred");
       });
   };
 

@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialButton from "../../shared/SocialButton";
 
 const Login = () => {
-  const axiosPublic = useAxiosPublic();
-
   const [showPassword, setShowPassword] = useState(false);
-  const { loginUser, googleLogin, githubLogin } = useAuth();
+  const { loginUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -24,23 +22,12 @@ const Login = () => {
   const onSubmit = (data) => {
     const { email, password } = data;
     loginUser(email, password)
-      .then((result) => {
-        console.log(result);
-        Swal.fire({
-          title: "success",
-          text: "Login Successfully ",
-          icon: "success",
-          timer: 1000,
-        });
+      .then(() => {
+        toast.success("User Created Success");
         navigate(from);
       })
-      .catch((error) => {
-        Swal.fire({
-          title: "Error!",
-          text: `${error.message}`,
-          icon: "error",
-          timer: 1000,
-        });
+      .catch(() => {
+        toast.error("an error occurred ");
       });
   };
 
@@ -97,46 +84,7 @@ const Login = () => {
       </div>
       <div className="text-center mt-7 mb-2">
         <p> ====== continue with ======= </p>
-      </div>
-      <div className="flex justify-between">
-        <button
-          className="btn btn-outline"
-          onClick={() =>
-            googleLogin().then((result) => {
-              const user = {
-                name: result.user?.displayName,
-                email: result.user?.email,
-                photo: result.user?.photoURL,
-                badge: "Bronze",
-              };
-              axiosPublic.post("/users", user).then((res) => {
-                console.log(res.data);
-              });
-              navigate(location?.state ? location.state : "/");
-            })
-          }
-        >
-          Google
-        </button>
-        <button
-          className="btn btn-outline"
-          onClick={() =>
-            githubLogin().then((result) => {
-              const user = {
-                name: result.user?.displayName,
-                email: result.user?.email,
-                photo: result.user?.photoURL,
-                badge: "Bronze",
-              };
-              axiosPublic.post("/users", user).then((res) => {
-                console.log(res.data);
-              });
-              navigate(location?.state ? location.state : "/");
-            })
-          }
-        >
-          Github
-        </button>
+        <SocialButton></SocialButton>
       </div>
     </div>
   );

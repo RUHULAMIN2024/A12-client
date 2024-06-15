@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
   // logout
   const logout = () => {
     setUserLoading(true);
-    signOut(auth);
+    return signOut(auth);
   };
 
   const userUpdate = (name, photo) => {
