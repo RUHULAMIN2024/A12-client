@@ -14,6 +14,7 @@ const Login = () => {
   const { loginUser, googleLogin, githubLogin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -29,14 +30,16 @@ const Login = () => {
           title: "success",
           text: "Login Successfully ",
           icon: "success",
+          timer: 1000,
         });
-        navigate(location?.state ? location.state : "/");
+        navigate(from);
       })
       .catch((error) => {
         Swal.fire({
           title: "Error!",
           text: `${error.message}`,
           icon: "error",
+          timer: 1000,
         });
       });
   };
@@ -81,11 +84,6 @@ const Login = () => {
           {errors.password && (
             <span className="text-red-500">This field is required</span>
           )}
-          <label className="label">
-            <a href="#" className="label-text-alt link link-hover">
-              Forgot password?
-            </a>
-          </label>
         </div>
         <div className="form-control mt-6">
           <button className="btn  text-white btn-primary">Login</button>
@@ -93,10 +91,12 @@ const Login = () => {
       </form>
       <div className="flex mt-1 justify-between">
         <p className="font-bold">New here?</p>
-        <Link to="/register">Create an account </Link>
+        <Link to="/register" className="underline text-blue-500">
+          Create an account{" "}
+        </Link>
       </div>
       <div className="text-center mt-7 mb-2">
-        <p>======continue with=======</p>
+        <p> ====== continue with ======= </p>
       </div>
       <div className="flex justify-between">
         <button

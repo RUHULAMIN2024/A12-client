@@ -101,7 +101,11 @@ const Nav = () => {
         {userInfo ? (
           <>
             <div className="dropdown dropdown-end">
-              <div role="button" className="btn btn-ghost btn-circle avatar">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
                 <div
                   title={userInfo?.displayName}
                   className="w-10 rounded-full"
@@ -113,7 +117,10 @@ const Nav = () => {
                   />
                 </div>
               </div>
-              <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              >
                 <li>
                   <button className="btn btn-sm md:btn-md btn-ghost">
                     {userInfo?.displayName}

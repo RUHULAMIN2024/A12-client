@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -10,10 +10,12 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Register = () => {
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  const { setUserInfo, createUser, userUpdate } = useAuth();
-
+  const { createUser, userUpdate } = useAuth();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -24,7 +26,7 @@ const Register = () => {
   const onSubmit = (data) => {
     setError("");
     const { name, photo, email, password } = data;
-    console.log(data);
+
     if (password.length < 6) {
       setError("password should be at least 6 characters");
       return;
@@ -36,33 +38,43 @@ const Register = () => {
       return;
     }
     createUser(email, password)
-      .then((result) => {
-        userUpdate(name, photo);
-        setUserInfo({ ...result?.user, photoURL: photo, displayName: name });
-        const user = {
-          name: name,
-          email: email,
-          photo: photo,
-          badge: "Bronze",
-        };
-        axiosPublic.post("/users", user).then((res) => {
-          if (res.data.insertedId) {
-            Swal.fire({
-              title: "success",
-              text: "Registered Successfully ",
-              icon: "success",
+      .then(() => {
+        userUpdate(name, photo)
+          .then(() => {
+            const newUserCreate = {
+              name: name,
+              email: email,
+              photo: photo,
+              badge: "bronze",
+            };
+            axiosPublic.post("/users", newUserCreate).then((res) => {
+              if (res.data.insertedId) {
+                Swal.fire({
+                  title: "success",
+                  text: "Registered Successfully ",
+                  icon: "success",
+                  timer: 1000,
+                });
+              }
             });
-            navigate("/");
-          }
-        });
+            navigate(from);
+          })
+          .catch(() => {
+            Swal.fire({
+              title: "Error",
+              text: "An error occurred",
+              icon: "error",
+              timer: 1000,
+            });
+          });
       })
-      .catch((error) => {
+      .catch(() => {
         Swal.fire({
-          title: "Error!",
-          text: `${error.message}`,
+          title: "Error",
+          text: "An error occurred",
           icon: "error",
+          timer: 1000,
         });
-        console.log(error);
       });
   };
 
@@ -136,11 +148,6 @@ const Register = () => {
             <span className="text-red-500">This field is required</span>
           )) ||
             (error && <span className="text-red-500">{error}</span>)}
-          <label className="label">
-            <a href="#" className="label-text-alt link link-hover">
-              Forgot password?
-            </a>
-          </label>
         </div>
         <div className="form-control mt-6">
           <button className="btn text-white btn-primary">Register</button>
@@ -148,7 +155,9 @@ const Register = () => {
       </form>
       <div className="flex justify-between">
         <p className="font-bold">Have an account?</p>
-        <Link to="/Login">Please Login</Link>
+        <Link to="/Login" className="underline text-blue-500">
+          Please Login
+        </Link>
       </div>
     </div>
   );
