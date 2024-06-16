@@ -28,12 +28,18 @@ function MainPost() {
   });
   const totalPages = Math.ceil(sortedDataCount / 3);
   const pagesGenerate = [...Array(totalPages).keys()];
-  console.log(totalPages);
-  console.log(pagesGenerate);
 
   return (
     <>
-      <div className="container py-8 flex justify-end items-center gap-4">
+      <div className="container py-8 flex justify-between items-center gap-4">
+        <button
+          onClick={() => {
+            setSortedData("time");
+          }}
+          className="btn btn-secondary"
+        >
+          Sort By Time
+        </button>
         <button
           onClick={() => {
             setSortedData("popularity");
