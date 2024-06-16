@@ -28,7 +28,6 @@ function MainPost() {
       return resData;
     },
   });
-  console.log(forumPostsData);
   const totalPages = Math.ceil(sortedDataCount / 3);
   const pagesGenerate = [...Array(totalPages).keys()];
 
