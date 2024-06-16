@@ -1,6 +1,6 @@
 const Tags = () => {
   return (
-    <div className="bg-base-200 my-8 py-8">
+    <section className="container bg-base-200 my-8 py-8">
       <h2 className="text-3xl uppercase md:text-4xl mb-3 text-center font-bold">
         Tags
       </h2>
@@ -11,7 +11,7 @@ const Tags = () => {
         <h4>Health</h4>
         <h4>Social Media</h4>
       </div>
-    </div>
+    </section>
   );
 };
 

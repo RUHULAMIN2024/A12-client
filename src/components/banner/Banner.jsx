@@ -6,8 +6,8 @@ const Banner = () => {
   };
 
   return (
-    <div
-      className="hero min-h-72 md:min-h-96"
+    <section
+      className="container hero min-h-72 md:min-h-96"
       style={{ backgroundImage: "url(https://i.ibb.co/CsG7Gwv/20945188.jpg)" }}
     >
       <div className="hero-overlay bg-opacity-60"></div>
@@ -37,7 +37,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

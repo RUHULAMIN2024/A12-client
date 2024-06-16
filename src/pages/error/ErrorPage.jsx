@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
-    <section className="flex items-center h-full p-16 dark:bg-gray-50 dark:text-gray-800">
+    <section className="flex items-center h-screen p-16 dark:bg-gray-50 dark:text-gray-800">
       <Helmet>
         <title>Connect Sphere | Error</title>
       </Helmet>
