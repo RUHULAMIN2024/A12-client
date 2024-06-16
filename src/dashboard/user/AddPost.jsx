@@ -65,6 +65,7 @@ function AddPost() {
       postTag: data.postTag,
       upVotes: data.upVote,
       downVotes: data.downVote,
+      postTime: new Date().toLocaleDateString(),
     };
 
     const res = await axiosSecure.post("/forum-post-data", userPostData);

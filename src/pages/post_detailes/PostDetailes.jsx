@@ -48,33 +48,30 @@ function PostDetailes() {
     <section className="py-8">
       <div className="container max-w-2xl mx-auto">
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <img
               className="hidden object-cover w-16 h-16 rounded-full sm:block"
-              src={postDetailesData?.author?.profile_picture}
+              src={postDetailesData?.authorImage}
               alt="avatar"
             />
             <span className="font-bold text-gray-700 cursor-pointer ">
-              {postDetailesData?.author?.name}
+              {postDetailesData?.authorName}
             </span>
           </div>
           <span className="text-sm font-medium text-gray-800">
-            {new Date(postDetailesData?.time).toLocaleDateString()}
+            {new Date(postDetailesData?.postTime).toLocaleDateString()}
           </span>
         </div>
         <div className="mt-2">
           <h2 className="text-xl font-bold text-gray-700 hover:text-gray-600  hover:underline">
-            {postDetailesData?.title}
+            {postDetailesData?.postTitle}
           </h2>
           <p className="mt-2 text-gray-600 ">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora
-            expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos
-            enim reprehenderit nisi, accusamus delectus nihil quis facere in
-            modi ratione libero!
+            {postDetailesData?.postDescription}
           </p>
         </div>
         <div className="flex justify-start gap-3 pt-3">
-          {postDetailesData?.tags.map((tag, ind) => {
+          {postDetailesData?.postTag.map((tag, ind) => {
             return (
               <span
                 key={ind}
@@ -88,16 +85,16 @@ function PostDetailes() {
         <div className="flex justify-start gap-6 pt-3">
           <p>
             Up Vote:{" "}
-            <span className="text-primary">{postDetailesData?.upvotes}</span>
+            <span className="text-primary">{postDetailesData?.upVotes}</span>
           </p>
           <p>
             Down Vote:{" "}
-            <span className="text-primary">{postDetailesData?.downvotes}</span>
+            <span className="text-primary">{postDetailesData?.downVotes}</span>
           </p>
           <p>
             Total Vote:{" "}
             <span className="text-primary">
-              {postDetailesData?.upvotes - postDetailesData?.downvotes}
+              {postDetailesData?.upVotes - postDetailesData?.downVotes}
             </span>
           </p>
         </div>

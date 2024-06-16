@@ -17,6 +17,7 @@ function MainPost() {
     };
     getForumPostsCount();
   }, [axiosPublic]);
+
   const { data: forumPostsData = [] } = useQuery({
     queryKey: ["forumPosts", sortedData, activePage],
     queryFn: async () => {
@@ -27,6 +28,7 @@ function MainPost() {
       return resData;
     },
   });
+  console.log(forumPostsData);
   const totalPages = Math.ceil(sortedDataCount / 3);
   const pagesGenerate = [...Array(totalPages).keys()];
 
@@ -51,41 +53,46 @@ function MainPost() {
         </button>
       </div>
       <div className="container py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {forumPostsData?.slice(0, 4)?.map((forumPost, ind) => {
+        {forumPostsData?.map((forumPost, ind) => {
           return (
             <Link key={ind} to={`/post/${forumPost?._id}`}>
-              <div className="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
-                <div className="p-4 md:p-4 space-y-2">
+              <div className="flex  h-fit shadow-lg">
+                <div className="w-full p-4 md:p-4 space-y-2">
                   <img
-                    className="w-full h-[200px] object-cover"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT080IAhqwzehB3ujK1Z90fc65UhljRGnwn7DVFJjvgcM1ClLYw0x2VrrubYUQko3Fvde4&usqp=CAU"
+                    className="size-[200px] rounded-full mx-auto object-cover"
+                    src={forumPost?.authorImage}
                     alt=""
                   />
-                  <h1 className="text-xl font-bold text-gray-800 dark:text-white">
-                    Backpack
+                  <h1 className="text-xl font-bold text-black ">
+                    {forumPost?.postTitle}
                   </h1>
-
-                  <div className="flex flex-wrap  items-center gap-3 space-y-3">
-                    {forumPost?.tags.map((forumTag, ind) => {
+                  <p className="text-gray-800">
+                    {forumPost?.postDescription.slice(0, 250)}...
+                  </p>
+                  <div className=" flex flex-wrap  items-center gap-3 ">
+                    {forumPost?.postTag.map((forumTag, ind) => {
                       return (
                         <span
                           key={ind}
-                          className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600"
+                          className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 "
                         >
                           {forumTag}
                         </span>
                       );
                     })}
                   </div>
-                  <span className="text-white">
-                    {new Date(forumPost?.time).toLocaleDateString()}
+                  <span className="text-black">
+                    {new Date(forumPost?.postTime).toLocaleDateString()}
                   </span>
                   <div className="flex flex-wrap  items-center gap-3">
-                    <span className="text-white">
-                      Comments Count: {forumPost?.comments_count}
-                    </span>
-                    <span className="text-white">
-                      Votes Count: {forumPost.upvotes - forumPost.downvotes}
+                    {forumPost?.commentsCount && (
+                      <span className="text-black">
+                        Comments Count: {forumPost?.commentsCount}
+                      </span>
+                    )}
+
+                    <span className="text-black">
+                      Votes Count: {forumPost.upVotes - forumPost.downVotes}
                     </span>
                   </div>
                 </div>
