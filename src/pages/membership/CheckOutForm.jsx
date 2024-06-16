@@ -96,7 +96,6 @@ function CheckOutForm() {
           confirmButtonText: "OK",
         });
       }
-      console.log(resData);
       setPaymentSubmitErrorUser(null);
       setProcessingPaymentUser(false);
     }
