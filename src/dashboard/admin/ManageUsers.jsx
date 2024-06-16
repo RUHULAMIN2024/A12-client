@@ -1,18 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import Swal from "sweetalert2";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 
 function ManageUsers() {
   const axiosSecure = useAxiosSecure();
+  const [sortedDataCount, setSortedDataCount] = useState(0);
+  const [activePage, setActivePage] = useState(0);
+  useEffect(() => {
+    const getUsersCountFn = async () => {
+      const res = await axiosSecure.get("/users-count");
+      const resData = await res.data;
+      setSortedDataCount(resData?.count);
+    };
+    getUsersCountFn();
+  });
   const { data: allUsers = [], refetch } = useQuery({
-    queryKey: ["allUsers"],
+    queryKey: ["allUsers", activePage],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get(`/users?page=${activePage}`);
       const data = await res.data;
       return data;
     },
   });
-
+  const totalPages = Math.ceil(sortedDataCount / 5);
+  const pagesGenerate = [...Array(totalPages).keys()];
   const handleMakeAdmin = (email) => {
     Swal.fire({
       title: "Are you sure?",
@@ -132,6 +145,47 @@ function ManageUsers() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="join container py-8 flex justify-center items-center">
+          <button
+            onClick={() => {
+              if (activePage > 0) {
+                setActivePage(activePage - 1);
+              }
+            }}
+            title="previous"
+            type="button"
+            className="join-item btn"
+          >
+            <IoArrowBack></IoArrowBack>
+          </button>
+          {pagesGenerate.map((page) => {
+            return (
+              <button
+                onClick={() => {
+                  setActivePage(page);
+                }}
+                key={page}
+                className={`${
+                  activePage === page && "btn-accent"
+                } join-item btn`}
+              >
+                {page + 1}
+              </button>
+            );
+          })}
+          <button
+            onClick={() => {
+              if (pagesGenerate.length > activePage + 1) {
+                setActivePage(activePage + 1);
+              }
+            }}
+            title="next"
+            type="button"
+            className="join-item btn"
+          >
+            <IoArrowForward></IoArrowForward>
+          </button>
         </div>
       </section>
     </>
