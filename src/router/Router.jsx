@@ -6,6 +6,7 @@ import Login from "../pages/login/Login";
 import Membership from "../pages/membership/Membership";
 import PostDetailes from "../pages/post_detailes/PostDetailes";
 import Register from "../pages/register/Register";
+import PrivetRoute from "./PrivetRoute";
 
 const router = createBrowserRouter([
   {
@@ -27,11 +28,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/membership",
-        element: <Membership></Membership>,
+        element: (
+          <PrivetRoute>
+            <Membership></Membership>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/post/:id",
-        element: <PostDetailes></PostDetailes>,
+        element: (
+          <PrivetRoute>
+            <PostDetailes></PostDetailes>
+          </PrivetRoute>
+        ),
       },
       // {
       //   path: "dashboard",

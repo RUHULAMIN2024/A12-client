@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { BsGearWideConnected } from "react-icons/bs";
 import { MdNotificationsActive } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
@@ -6,20 +6,20 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Nav = () => {
-  const [theme, setTheme] = useState("light");
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    document.querySelector("html").setAttribute("data-theme", localTheme);
-  }, [theme]);
+  // const [theme, setTheme] = useState("light");
+  // useEffect(() => {
+  //   localStorage.setItem("theme", theme);
+  //   const localTheme = localStorage.getItem("theme");
+  //   document.querySelector("html").setAttribute("data-theme", localTheme);
+  // }, [theme]);
 
-  const handleToggle = (e) => {
-    if (e.target.checked) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
+  // const handleToggle = (e) => {
+  //   if (e.target.checked) {
+  //     setTheme("dark");
+  //   } else {
+  //     setTheme("light");
+  //   }
+  // };
 
   const links = (
     <>
@@ -165,7 +165,7 @@ const Nav = () => {
           </>
         )}
 
-        <label className="cursor-pointer ml-2 grid place-items-center">
+        {/* <label className="cursor-pointer ml-2 grid place-items-center">
           <input
             onChange={handleToggle}
             type="checkbox"
@@ -200,7 +200,7 @@ const Nav = () => {
           >
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-        </label>
+        </label> */}
       </div>
     </div>
   );
