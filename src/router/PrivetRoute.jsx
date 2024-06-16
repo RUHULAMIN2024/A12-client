@@ -5,10 +5,10 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import LoaderSpinner from "../shared/LoaderSpinner";
 
 const PrivetRoute = ({ children }) => {
-  const { userInfo, loding } = useContext(AuthContext);
+  const { userInfo, userLoading } = useContext(AuthContext);
   const location = useLocation();
 
-  if (loding) {
+  if (userLoading) {
     return <LoaderSpinner></LoaderSpinner>;
   }
   if (userInfo) {
