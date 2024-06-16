@@ -12,7 +12,6 @@ function AddPost() {
   const navigate = useNavigate();
   const [forumPostCountUser, setForumPostCountUser] = useState(0);
   const [isMember, setIsMember] = useState(null);
-  console.log(isMember);
   const options = [
     { value: "Environment", label: "Environment" },
     { value: "Healthcare", label: "Healthcare" },

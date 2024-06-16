@@ -1,7 +1,19 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "./../../hooks/useAuth";
 
 function MyProfile() {
   const { userInfo } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data: isMember } = useQuery({
+    queryKey: ["isMember"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/check-user-badge/${userInfo?.email}`);
+      const resData = await res.data;
+      return resData?.isMember;
+    },
+  });
+  console.log(isMember);
   return (
     <div className="flex justify-center items-center flex-col p-4 space-y-3">
       <img
@@ -17,13 +29,18 @@ function MyProfile() {
         User Email:{" "}
         <span className="text-primary font-bold">{userInfo?.email}</span>
       </p>{" "}
-      <p className="font-semibold">
-        User Badge: <span className="text-primary font-bold">Bronze</span>
-      </p>
-      {userInfo?.badge === "gold" && (
+      {isMember ? (
+        <>
+          <p className="font-semibold">
+            User Badge: <span className="text-primary font-bold">Bronze</span>
+          </p>
+          <p className="font-semibold">
+            Rewarded Badge: <span className="text-primary font-bold">Gold</span>
+          </p>
+        </>
+      ) : (
         <p className="font-semibold">
-          Rewarded Badge:{" "}
-          <span className="text-primary font-bold">{userInfo?.badge}</span>
+          User Badge: <span className="text-primary font-bold">Bronze</span>
         </p>
       )}
     </div>
