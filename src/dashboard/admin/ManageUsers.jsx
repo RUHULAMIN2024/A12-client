@@ -67,7 +67,7 @@ function ManageUsers() {
           <h2 className="text-lg font-medium text-gray-800 ">All Users</h2>
 
           <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full  ">
-            {allUsers?.length}
+            {sortedDataCount}
           </span>
         </div>
 
