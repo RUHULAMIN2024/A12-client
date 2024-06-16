@@ -5,6 +5,7 @@ import MyPost from "../dashboard/user/MyPost";
 import Layout from "../layout/Layout";
 import Dashboard from "../layout/dashboard/Dashboard";
 import DashboardLayout from "../layout/dashboard/DashboardLayout";
+import ForumComments from "../pages/comments/ForumComments";
 import ErrorPage from "../pages/error/ErrorPage";
 import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
@@ -51,48 +52,6 @@ const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
-      // {
-      //   path: "dashboard",
-      //   element: (
-      //     <PrivetRoute>
-      //       <DashboardLayout></DashboardLayout>
-      //     </PrivetRoute>
-      //   ),
-      //   children: [
-      //     {
-      //       index: true,
-      //       element: <Dashboard></Dashboard>,
-      //     },
-      //     {
-      //       path: "my-profile",
-      //       element: <Profile></Profile>,
-      //     },
-      //     // {
-      //     //   path: "add-post",
-      //     //   element: <AddPost></AddPost>,
-      //     // },
-      //     // {
-      //     //   path: "my-post",
-      //     //   element: <MyPost></MyPost>,
-      //     // },
-      //     // {
-      //     //   path: "admin-profile",
-      //     //   element: <MyPost></MyPost>,
-      //     // },
-      //     // {
-      //     //   path: "manage-users",
-      //     //   element: <MyPost></MyPost>,
-      //     // },
-      //     // {
-      //     //   path: "reported--activities",
-      //     //   element: <MyPost></MyPost>,
-      //     // },
-      //     // {
-      //     //   path: "make-announcement",
-      //     //   element: <MyPost></MyPost>,
-      //     // },
-      //   ],
-      // },
     ],
   },
   {
@@ -128,6 +87,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyPost></MyPost>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "comments/:id",
+        element: (
+          <PrivetRoute>
+            <ForumComments></ForumComments>
           </PrivetRoute>
         ),
       },

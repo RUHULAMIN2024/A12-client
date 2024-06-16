@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "./../../hooks/useAuth";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
@@ -8,6 +9,7 @@ import useAxiosSecure from "./../../hooks/useAxiosSecure";
 function MyPost() {
   const { userInfo } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const [sortedDataCount, setSortedDataCount] = useState(0);
   const [activePage, setActivePage] = useState(0);
   useEffect(() => {
@@ -33,6 +35,9 @@ function MyPost() {
   });
   const totalPages = Math.ceil(sortedDataCount / 5);
   const pagesGenerate = [...Array(totalPages).keys()];
+  const handleForumPostComment = (id) => {
+    navigate(`/dashboard/comments/${id}`);
+  };
   const handleForumPostDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -132,7 +137,12 @@ function MyPost() {
                                 forumPostDetails?.downVotes}
                             </td>
                             <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                              <button className="btn btn-accent">
+                              <button
+                                onClick={() => {
+                                  handleForumPostComment(forumPostDetails?._id);
+                                }}
+                                className="btn btn-accent"
+                              >
                                 Comment
                               </button>
                             </td>
