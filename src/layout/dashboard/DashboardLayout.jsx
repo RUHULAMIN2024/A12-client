@@ -25,7 +25,7 @@ function Dashboard() {
       <section>
         <Nav></Nav>
         <div className="container h-[calc(100vh-92px)] grid grid-cols-1 lg:grid-cols-4 gap-4 justify-between">
-          <div className="col-span-1 h-fit border border-slate-300 p-3">
+          <div className="static lg:top-[72px] lg:sticky lg:z-[999999] col-span-1 h-fit border border-slate-300 p-3">
             <ul className=" text-slate-600 font-medium space-y-3">
               <li className="flex items-center gap-2">
                 <MdDashboard></MdDashboard>
