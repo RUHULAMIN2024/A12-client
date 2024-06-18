@@ -5,6 +5,7 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
+import useTags from "./../../hooks/useTags";
 
 function AddPost() {
   const { userInfo } = useAuth();
@@ -12,17 +13,14 @@ function AddPost() {
   const navigate = useNavigate();
   const [forumPostCountUser, setForumPostCountUser] = useState(0);
   const [isMember, setIsMember] = useState(null);
-  const options = [
-    { value: "Environment", label: "Environment" },
-    { value: "Healthcare", label: "Healthcare" },
-    { value: "Technology", label: "Technology" },
-    { value: "Health", label: "Health" },
-    { value: "Science", label: "Science" },
-    { value: "Food", label: "Food" },
-    { value: "Travel", label: "Travel" },
-    { value: "Programming", label: "Programming" },
-    { value: "Social Media", label: "Social Media" },
-  ];
+  const { tags } = useTags();
+  const options = [];
+  const allTags = () => {
+    tags.map((tag) => {
+      return options.push({ value: tag.tag, label: tag.tag });
+    });
+  };
+  allTags();
   useEffect(() => {
     const forumPostCountUserFn = async () => {
       const res = await axiosSecure.get(
