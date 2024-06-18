@@ -1,11 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { BsGearWideConnected } from "react-icons/bs";
 import { MdNotificationsActive } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Nav = () => {
+  const axiosPublic = useAxiosPublic();
   // const [theme, setTheme] = useState("light");
   // useEffect(() => {
   //   localStorage.setItem("theme", theme);
@@ -21,6 +24,14 @@ const Nav = () => {
   //   }
   // };
 
+  const { data: annoucementsCount = 0 } = useQuery({
+    queryKey: ["annoucementsCount"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/annoucements-count");
+      const resData = await res.data;
+      return resData?.count;
+    },
+  });
   const links = (
     <>
       <NavLink
@@ -42,16 +53,6 @@ const Nav = () => {
         }
       >
         Membership
-      </NavLink>
-      <NavLink
-        to="/notification"
-        className={({ isActive }) =>
-          isActive
-            ? "text-white bg-secondary py-2  px-3 rounded-sm font-bold"
-            : "font-bold px-3 py-2"
-        }
-      >
-        <MdNotificationsActive className="text-xl" />
       </NavLink>
     </>
   );
@@ -98,7 +99,16 @@ const Nav = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu space-x-3 menu-horizontal px-1">{links}</ul>
       </div>
+
       <div className="navbar-end">
+        {annoucementsCount && (
+          <div className="flex items-center gap-2">
+            <MdNotificationsActive className="text-xl" />
+            <sup className="bg-red-500 p-2 flex items-center  text-white rounded-full size-2 justify-center">
+              {annoucementsCount}
+            </sup>
+          </div>
+        )}
         {userInfo ? (
           <>
             <div className="dropdown dropdown-end">
