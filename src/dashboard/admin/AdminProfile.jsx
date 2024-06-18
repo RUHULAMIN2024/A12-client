@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import AdminProfileChart from "../../components/Chart/AdminProfileChart";
 import useTags from "../../hooks/useTags";
 import useAuth from "./../../hooks/useAuth";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
@@ -12,6 +13,11 @@ function AdminProfile() {
   const [numberOfPost, setNumberOfPost] = useState(0);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const [numberOfUsers, setNumberOfUsers] = useState(0);
+  const data = [
+    { name: "All Users", value: numberOfUsers },
+    { name: "All Posts", value: numberOfPost },
+    { name: "All Comments", value: 5 },
+  ];
   const { tagsRefetch } = useTags();
   useEffect(() => {
     const numberOfPostsFn = async () => {
@@ -114,7 +120,7 @@ function AdminProfile() {
               </div>
             </div>
           </div>
-          <div>df</div>
+          <AdminProfileChart data={data}></AdminProfileChart>
         </div>
         <div className="py-8">
           <h2 className="text-2xl uppercase md:text-3xl mb-3 text-center font-bold">

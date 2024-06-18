@@ -4,7 +4,6 @@ import Modal from "react-modal";
 const comment =
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita cumque placeat itaque deleniti quidem et sed dolores molestias aliquam hic, quasi sit accusamus soluta nisi rerum, debitis nulla, consectetur vitae.";
 
-console.log(comment.length);
 const customStyles = {
   content: {
     top: "50%",
