@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useTags from "../../hooks/useTags";
 import useAuth from "./../../hooks/useAuth";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 
@@ -11,6 +12,7 @@ function AdminProfile() {
   const [numberOfPost, setNumberOfPost] = useState(0);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const [numberOfUsers, setNumberOfUsers] = useState(0);
+  const { tagsRefetch } = useTags();
   useEffect(() => {
     const numberOfPostsFn = async () => {
       const res = await axiosSecure.get("/number-of-forum-posts");
@@ -43,8 +45,8 @@ function AdminProfile() {
     formState: { errors },
   } = useForm();
   const onAddTags = async (data) => {
-    const { addTags } = data;
-    const res = await axiosSecure.post("/add-tags", { tag: addTags });
+    const tag = data?.addTags.toLowerCase();
+    const res = await axiosSecure.post("/add-tags", { tag: tag });
     const resData = await res.data;
     if (resData?.message === "Tag already exists") {
       Swal.fire({
@@ -56,6 +58,7 @@ function AdminProfile() {
       return;
     }
     if (resData.insertedId) {
+      tagsRefetch();
       reset();
       Swal.fire({
         title: "Tags added successfully",
