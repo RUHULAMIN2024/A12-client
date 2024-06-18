@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import useAuth from "./../../hooks/useAuth";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 
@@ -33,6 +35,43 @@ function AdminProfile() {
       return data;
     },
   });
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const onAddTags = async (data) => {
+    const { addTags } = data;
+    const res = await axiosSecure.post("/add-tags", { tag: addTags });
+    const resData = await res.data;
+    if (resData?.message === "Tag already exists") {
+      Swal.fire({
+        title: "Tag already exists",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 500,
+      });
+      return;
+    }
+    if (resData.insertedId) {
+      reset();
+      Swal.fire({
+        title: "Tags added successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 500,
+      });
+    } else {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 500,
+      });
+    }
+  };
   return (
     <>
       <section className="py-8">
@@ -73,6 +112,34 @@ function AdminProfile() {
             </div>
           </div>
           <div>df</div>
+        </div>
+        <div className="py-8">
+          <h2 className="text-2xl uppercase md:text-3xl mb-3 text-center font-bold">
+            Add Tags
+          </h2>
+          <form onSubmit={handleSubmit(onAddTags)}>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Add Tags:</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Add Tags..."
+                className="input input-bordered"
+                {...register("addTags", { required: true })}
+              />
+              {errors.addTags && (
+                <span className="text-red-500 pt-2 text-sm">
+                  Tags is required!
+                </span>
+              )}
+            </div>
+            <div className="form-control mt-6">
+              <button type="submit" className="btn  text-white btn-primary">
+                Add Tags
+              </button>
+            </div>
+          </form>
         </div>
       </section>
     </>
