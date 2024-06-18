@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAnnoucement from "../../hooks/useAnnoucement";
@@ -52,6 +53,9 @@ function Annoucements() {
   };
   return (
     <>
+      <Helmet>
+        <title>Connect Sphere | Dashboard | Annoucements</title>
+      </Helmet>
       <section className="py-8">
         <div className="container">
           <form onSubmit={handleSubmit(onAnnoucement)}>

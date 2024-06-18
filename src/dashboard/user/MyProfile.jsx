@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import bronzeBadge from "../../assets/bronze-badge.png";
 import goldBadge from "../../assets/gold-badge.png";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -15,38 +16,47 @@ function MyProfile() {
     },
   });
   return (
-    <div className="flex justify-center items-center flex-col p-4 space-y-3">
-      <img
-        src={userInfo?.photoURL}
-        className="rounded-full object-cover size-[200px]"
-        alt=""
-      />
-      <p className="font-semibold">
-        User Name:{" "}
-        <span className="text-primary font-bold">{userInfo?.displayName}</span>
-      </p>{" "}
-      <p className="font-semibold">
-        User Email:{" "}
-        <span className="text-primary font-bold">{userInfo?.email}</span>
-      </p>{" "}
-      {isMember ? (
-        <>
+    <>
+      <Helmet>
+        <title>Connect Sphere | Dashboard | My Post</title>
+      </Helmet>
+
+      <div className="flex justify-center items-center flex-col p-4 space-y-3">
+        <img
+          src={userInfo?.photoURL}
+          className="rounded-full object-cover size-[200px]"
+          alt=""
+        />
+        <p className="font-semibold">
+          User Name:{" "}
+          <span className="text-primary font-bold">
+            {userInfo?.displayName}
+          </span>
+        </p>{" "}
+        <p className="font-semibold">
+          User Email:{" "}
+          <span className="text-primary font-bold">{userInfo?.email}</span>
+        </p>{" "}
+        {isMember ? (
+          <>
+            <p className="font-semibold flex items-center gap-2">
+              User Badge: <span className="text-primary font-bold">Bronze</span>
+              <img className="size-8 object-cover" src={bronzeBadge} alt="" />
+            </p>
+            <p className="font-semibold flex items-center gap-2">
+              Rewarded Badge:{" "}
+              <span className="text-primary font-bold">Gold</span>
+              <img className="size-8 object-cover" src={goldBadge} alt="" />
+            </p>
+          </>
+        ) : (
           <p className="font-semibold flex items-center gap-2">
             User Badge: <span className="text-primary font-bold">Bronze</span>
             <img className="size-8 object-cover" src={bronzeBadge} alt="" />
           </p>
-          <p className="font-semibold flex items-center gap-2">
-            Rewarded Badge: <span className="text-primary font-bold">Gold</span>
-            <img className="size-8 object-cover" src={goldBadge} alt="" />
-          </p>
-        </>
-      ) : (
-        <p className="font-semibold flex items-center gap-2">
-          User Badge: <span className="text-primary font-bold">Bronze</span>
-          <img className="size-8 object-cover" src={bronzeBadge} alt="" />
-        </p>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

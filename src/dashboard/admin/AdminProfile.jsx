@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import AdminProfileChart from "../../components/Chart/AdminProfileChart";
@@ -83,6 +84,9 @@ function AdminProfile() {
   };
   return (
     <>
+      <Helmet>
+        <title>Connect Sphere | Dashboard | Admin Profile</title>
+      </Helmet>
       <section className="py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="container p-4 flex flex-col justify-start shadow-md ">

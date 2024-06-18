@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -88,6 +89,9 @@ function AddPost() {
 
   return (
     <>
+      <Helmet>
+        <title>Connect Sphere | Dashboard | Add Post</title>
+      </Helmet>
       {forumPostCountUser >= 5 && !isMember ? (
         <div className="space-y-3">
           <p className="text-blue-500">

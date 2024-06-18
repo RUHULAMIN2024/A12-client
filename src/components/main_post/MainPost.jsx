@@ -33,6 +33,9 @@ function MainPost() {
 
   return (
     <>
+      <h2 className="text-2xl uppercase md:text-3xl mb-3 text-center font-bold">
+        Forum Posts
+      </h2>
       <div className="container py-8 flex justify-between items-center gap-4">
         <button
           onClick={() => {
@@ -51,9 +54,7 @@ function MainPost() {
           Sort By Popularity
         </button>
       </div>
-      <h2 className="text-2xl uppercase md:text-3xl mb-3 text-center font-bold">
-        Forum Posts
-      </h2>
+
       <div className="container py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {forumPostsData?.map((forumPost, ind) => {
           return (

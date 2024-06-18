@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -78,6 +79,9 @@ function MyPost() {
   };
   return (
     <>
+      <Helmet>
+        <title>Connect Sphere | Dashboard | My Post</title>
+      </Helmet>
       <section className="container px-4 mx-auto">
         <div className="flex items-center gap-x-3">
           <h2 className="text-lg font-medium text-gray-800 ">My posts</h2>
