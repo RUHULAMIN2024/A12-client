@@ -1,11 +1,15 @@
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAnnoucement from "../../hooks/useAnnoucement";
+import useAnnoucementCount from "./../../hooks/useAnnoucementCount";
 import useAuth from "./../../hooks/useAuth";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 
 function Annoucements() {
   const { userInfo } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const { annoucementRefetch } = useAnnoucement();
+  const { annoucementsCountRefetch } = useAnnoucementCount();
   const {
     register,
     handleSubmit,
@@ -29,6 +33,8 @@ function Annoucements() {
     const resData = await res.data;
     if (resData.insertedId) {
       reset();
+      annoucementsCountRefetch();
+      annoucementRefetch();
       Swal.fire({
         title: "Annoucement Posted Successfully",
         icon: "success",

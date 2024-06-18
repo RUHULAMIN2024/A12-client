@@ -1,14 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { BsGearWideConnected } from "react-icons/bs";
 import { MdNotificationsActive } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAnnoucementCount from "../../hooks/useAnnoucementCount";
 
 const Nav = () => {
-  const axiosPublic = useAxiosPublic();
   // const [theme, setTheme] = useState("light");
   // useEffect(() => {
   //   localStorage.setItem("theme", theme);
@@ -24,14 +22,7 @@ const Nav = () => {
   //   }
   // };
 
-  const { data: annoucementsCount = 0 } = useQuery({
-    queryKey: ["annoucementsCount"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/annoucements-count");
-      const resData = await res.data;
-      return resData?.count;
-    },
-  });
+  const { annoucementsCount } = useAnnoucementCount();
   const links = (
     <>
       <NavLink

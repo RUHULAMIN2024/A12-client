@@ -3,7 +3,7 @@ import useAxiosPublic from "./useAxiosPublic";
 
 function useAnnoucement() {
   const axiosPublic = useAxiosPublic();
-  const { data: annoucements = [] } = useQuery({
+  const { refetch: annoucementRefetch, data: annoucements = [] } = useQuery({
     queryKey: ["annoucements"],
     queryFn: async () => {
       const res = await axiosPublic.get("/annoucements");
@@ -11,7 +11,7 @@ function useAnnoucement() {
       return resData;
     },
   });
-  return [annoucements];
+  return { annoucements, annoucementRefetch };
 }
 
 export default useAnnoucement;

@@ -51,10 +51,17 @@ function MainPost() {
           Sort By Popularity
         </button>
       </div>
+      <h2 className="text-2xl uppercase md:text-3xl mb-3 text-center font-bold">
+        Forum Posts
+      </h2>
       <div className="container py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {forumPostsData?.map((forumPost, ind) => {
           return (
-            <Link key={ind} to={`/post/${forumPost?._id}`}>
+            <Link
+              title={`View ${forumPost?.postTitle}`}
+              key={ind}
+              to={`/post/${forumPost?._id}`}
+            >
               <div className="flex  h-fit shadow-lg">
                 <div className="w-full p-4 md:p-4 space-y-2">
                   <img
