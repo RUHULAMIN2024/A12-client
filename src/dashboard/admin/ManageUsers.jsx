@@ -38,7 +38,6 @@ function ManageUsers() {
       cancelButtonText: "No, cancel!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log(email);
         const res = await axiosSecure.put(`/users-make-admin/${email}`);
         const resData = await res.data;
         if (resData.modifiedCount > 0) {

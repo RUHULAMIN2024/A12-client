@@ -13,7 +13,6 @@ function MyProfile() {
       return resData?.isMember;
     },
   });
-  console.log(isMember);
   return (
     <div className="flex justify-center items-center flex-col p-4 space-y-3">
       <img

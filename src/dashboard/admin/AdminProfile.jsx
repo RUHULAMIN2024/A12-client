@@ -9,7 +9,6 @@ function AdminProfile() {
   const [numberOfPost, setNumberOfPost] = useState(0);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const [numberOfUsers, setNumberOfUsers] = useState(0);
-  console.log(numberOfUsers);
   useEffect(() => {
     const numberOfPostsFn = async () => {
       const res = await axiosSecure.get("/number-of-forum-posts");
