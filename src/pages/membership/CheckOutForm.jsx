@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "./../../hooks/useAuth";
 import useAxiosPublic from "./../../hooks/useAxiosPublic";
-import useAxiosSecure from "./../../hooks/useAxiosSecure";
 
 function CheckOutForm() {
   const navigate = useNavigate();
@@ -15,21 +14,20 @@ function CheckOutForm() {
 
   const [paymentSubmitErrorUser, setPaymentSubmitErrorUser] = useState(null);
 
-  const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
 
   const { userInfo } = useAuth();
 
   useEffect(() => {
     const getMemberShipIntent = async () => {
-      const res = await axiosSecure.post("/create-membership-intent", {
+      const res = await axiosPublic.post("/create-membership-intent", {
         membershipfee: 50,
       });
       const resData = await res.data;
       setGetClientSecret(resData.clientSecret);
     };
     getMemberShipIntent();
-  }, [axiosSecure]);
+  }, [axiosPublic]);
 
   const stripe = useStripe();
   const elements = useElements();

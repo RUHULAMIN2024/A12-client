@@ -1,4 +1,25 @@
+import { useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
+import Modal from "react-modal";
+const comment =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita cumque placeat itaque deleniti quidem et sed dolores molestias aliquam hic, quasi sit accusamus soluta nisi rerum, debitis nulla, consectetur vitae.";
+
+console.log(comment.length);
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "white",
+    textAlign: "center",
+  },
+};
 function ForumComments() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleReadMore = () => {
+    setIsModalOpen(true);
+  };
   return (
     <>
       <section className="py-8">
@@ -49,14 +70,20 @@ function ForumComments() {
                       <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         ruhul@amin.com
                       </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  ">
-                        <p className="text-wrap break-words">
-                          Lorem ipsum dolor, sit amet consectetur adipisicing
-                          elit. Impedit aperiam reprehenderit ex, officiis
-                          neque, autem iusto iure expedita beatae possimus
-                          obcaecati doloribus amet. Modi cum ratione tenetur
-                          vero accusamus repellat?
-                        </p>
+                      <td className="px-4 py-4 text-sm text-gray-500  text-wrap break-words flex items-center flex-wrap  space-x-2">
+                        {comment.length > 20 ? (
+                          <>
+                            {comment.slice(0, 20)}...{" "}
+                            <button
+                              className="btn btn-accent btn-sm"
+                              onClick={handleReadMore}
+                            >
+                              <FaArrowRight></FaArrowRight>
+                            </button>
+                          </>
+                        ) : (
+                          { comment }
+                        )}
                       </td>
                       <td>
                         <select
@@ -85,6 +112,23 @@ function ForumComments() {
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => {
+            setIsModalOpen(false);
+          }}
+          style={customStyles}
+        >
+          <button
+            className="btn btn-sm btn-accent"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+          >
+            close
+          </button>
+          <div>{comment}</div>
+        </Modal>
       </section>
     </>
   );

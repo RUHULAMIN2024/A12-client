@@ -28,7 +28,7 @@ function MainPost() {
       return resData;
     },
   });
-  const totalPages = Math.ceil(sortedDataCount / 3);
+  const totalPages = Math.ceil(sortedDataCount / 5);
   const pagesGenerate = [...Array(totalPages).keys()];
 
   return (
