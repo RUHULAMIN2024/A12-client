@@ -6,7 +6,7 @@ function Activities() {
       <Helmet>
         <title>Connect Sphere | Dashboard | Activities</title>
       </Helmet>
-      <div>Activities</div>;
+      <div>Activities</div>
     </>
   );
 }

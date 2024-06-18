@@ -29,7 +29,7 @@ function PostDetailes() {
     },
   });
 
-  const shareUrl = `/share-post/${postDetailesData?._id}`;
+  const shareUrl = `https://b9a12-server-side-ruhulamin-2024.vercel.app/share-post/${postDetailesData?._id}`;
 
   const handleComment = (e) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ function PostDetailes() {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <img
-                className="hidden object-cover w-16 h-16 rounded-full sm:block"
+                className="object-cover w-16 h-16 rounded-full sm:block"
                 src={postDetailesData?.authorImage}
                 alt="avatar"
               />
@@ -87,7 +87,7 @@ function PostDetailes() {
               );
             })}
           </div>
-          <div className="flex justify-start gap-6 pt-3">
+          <div className="flex flex-wrap justify-start gap-6 pt-3">
             <p>
               Up Vote:{" "}
               <span className="text-primary">{postDetailesData?.upVotes}</span>
@@ -105,18 +105,18 @@ function PostDetailes() {
               </span>
             </p>
           </div>
-          <div className="flex justify-start gap-3 pt-3">
+          <div className="flex flex-wrap justify-start gap-3 pt-3">
             <button
               onClick={handleUpvote}
               type="button"
-              className="btn btn-primary"
+              className="btn btn-sm btn-primary"
             >
               Up Vote <BiSolidUpvote></BiSolidUpvote>
             </button>
             <button
               onClick={handleDownvote}
               type="button"
-              className="btn btn-primary"
+              className="btn btn-sm btn-primary"
             >
               Down Vote <BiSolidDownvote></BiSolidDownvote>
             </button>
