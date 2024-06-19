@@ -36,7 +36,7 @@ function MainPost({ setBannerSearchTag, bannerSearchTag }) {
       <h2 className="text-2xl uppercase md:text-3xl mb-3 text-center font-bold">
         Forum Posts
       </h2>
-      <div className="container py-8 flex justify-between items-center gap-4">
+      <div className="container py-8 flex justify-center items-center gap-4">
         <button
           onClick={() => {
             setSortedData("time");

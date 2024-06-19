@@ -41,6 +41,15 @@ function PostDetailes() {
       comment: comment,
     });
     const resData = await res.data;
+    if (resData?.message === "User has already commented on this post") {
+      Swal.fire({
+        title: "User has already commented on this post",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
     if (resData.modifiedCount > 0) {
       Swal.fire({
         title: "Comment Posted Successfully",
@@ -64,8 +73,6 @@ function PostDetailes() {
   const handleDownvote = () => {
     console.log("downvote");
   };
-
-  console.log(postDetailesData);
   return (
     <>
       <Helmet>
