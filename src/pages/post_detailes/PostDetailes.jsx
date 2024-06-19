@@ -20,20 +20,23 @@ function PostDetailes() {
   const axiosPublic = useAxiosPublic();
 
   const { userInfo } = useAuth();
-  const { data: postDetailesData } = useQuery({
-    queryKey: ["postDetailesData"],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/forum-posts-detailes/${id}`);
-      const resData = await res.data;
-      return resData;
-    },
-  });
+  const { refetch: postDetailesDataRefetch, data: postDetailesData } = useQuery(
+    {
+      queryKey: ["postDetailesData"],
+      queryFn: async () => {
+        const res = await axiosPublic.get(`/forum-posts-detailes/${id}`);
+        const resData = await res.data;
+        return resData;
+      },
+    }
+  );
 
   const shareUrl = window.location.href;
 
   const handleComment = async (e) => {
     e.preventDefault();
-    const comment = e.target.comment.value;
+    const form = e.target;
+    const comment = form.comment.value;
     const res = await axiosPublic.post(`/forum-post-comment/${id}`, {
       forumMainPostId: id,
       userName: userInfo?.displayName,
@@ -51,6 +54,8 @@ function PostDetailes() {
       return;
     }
     if (resData.modifiedCount > 0) {
+      postDetailesDataRefetch();
+      form.reset();
       Swal.fire({
         title: "Comment Posted Successfully",
         icon: "success",
@@ -68,10 +73,66 @@ function PostDetailes() {
   };
 
   const handleUpvote = async () => {
-    console.log("upvote");
+    const res = await axiosPublic.post(`/forum-post-upvote/${id}`, {
+      userEmail: userInfo?.email,
+    });
+    const resData = await res.data;
+    if (resData.message === "User has already upvote") {
+      Swal.fire({
+        title: "User has already upvote",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+    if (resData.message === "upvote added successfully") {
+      postDetailesDataRefetch();
+      Swal.fire({
+        title: "upvote added successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
-  const handleDownvote = () => {
-    console.log("downvote");
+  const handleDownvote = async () => {
+    const res = await axiosPublic.post(`/forum-post-downvote/${id}`, {
+      userEmail: userInfo?.email,
+    });
+    const resData = await res.data;
+    if (resData.message === "User has already downvote") {
+      Swal.fire({
+        title: "User has already downvote",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+    if (resData.message === "downvote added successfully") {
+      postDetailesDataRefetch();
+      Swal.fire({
+        title: "downvote added successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
   return (
     <>
