@@ -3,6 +3,8 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Modal from "react-modal";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAuth from "./../../hooks/useAuth";
 import useAxiosPublic from "./../../hooks/useAxiosPublic";
 
 const customStyles = {
@@ -17,6 +19,7 @@ const customStyles = {
 function ForumComments() {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
+  const { userInfo } = useAuth();
   const [commentWithModal, setCommentWithModal] = useState("");
   const [feedbackComment, setFeedBackComment] = useState({});
   const { data: forumPostComments = [] } = useQuery({
@@ -39,11 +42,34 @@ function ForumComments() {
       [commentEmail]: { ...prevState[commentEmail], feedback: value },
     }));
   };
-  const handleReportClick = (commentEmail) => {
+  const handleReportClick = async (commentEmail, commentData) => {
     setFeedBackComment((prevState) => ({
       ...prevState,
       [commentEmail]: { ...prevState[commentEmail], reported: true },
     }));
+    const repotedData = {
+      forumMainPostId: id,
+      userName: userInfo?.displayName,
+      commentEmail: commentEmail,
+      commentDescription: commentData,
+    };
+    const res = await axiosPublic.post(`/forum-post-report`, repotedData);
+    const resData = await res.data;
+    if (resData.insertedId) {
+      Swal.fire({
+        title: "Reported Successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
   return (
     <>
@@ -137,7 +163,10 @@ function ForumComments() {
                           <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                             <button
                               onClick={() => {
-                                handleReportClick(commentData?.userEmail);
+                                handleReportClick(
+                                  commentData?.userEmail,
+                                  commentData?.comment
+                                );
                               }}
                               disabled={
                                 !feedbackComment[commentData?.userEmail]
