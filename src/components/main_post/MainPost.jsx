@@ -91,12 +91,11 @@ function MainPost({ setBannerSearchTag, bannerSearchTag }) {
                     <span className="text-black">
                       {new Date(forumPost?.postTime).toLocaleDateString()}
                     </span>
-                    <div className="flex flex-wrap  items-center gap-3">
-                      {forumPost?.commentsCount && (
-                        <span className="text-black">
-                          Comments Count: {forumPost?.commentsCount}
-                        </span>
-                      )}
+                    <div className="flex flex-wrap  items-center gap-4">
+                      <span className="text-black">
+                        Comments Count:{" "}
+                        {forumPost?.comments ? forumPost.comments.length : 0}
+                      </span>
 
                       <span className="text-black">
                         Votes Count: {forumPost.upVotes - forumPost.downVotes}

@@ -11,6 +11,7 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
+import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "./../../hooks/useAuth";
 
@@ -19,7 +20,6 @@ function PostDetailes() {
   const axiosPublic = useAxiosPublic();
 
   const { userInfo } = useAuth();
-  console.log(userInfo);
   const { data: postDetailesData } = useQuery({
     queryKey: ["postDetailesData"],
     queryFn: async () => {
@@ -29,12 +29,33 @@ function PostDetailes() {
     },
   });
 
-  const shareUrl = `https://b9a12-server-side-ruhulamin-2024.vercel.app/share-post/${postDetailesData?._id}`;
+  const shareUrl = window.location.href;
 
-  const handleComment = (e) => {
+  const handleComment = async (e) => {
     e.preventDefault();
     const comment = e.target.comment.value;
-    console.log(comment);
+    const res = await axiosPublic.post(`/forum-post-comment/${id}`, {
+      forumMainPostId: id,
+      userName: userInfo?.displayName,
+      userEmail: userInfo?.email,
+      comment: comment,
+    });
+    const resData = await res.data;
+    if (resData.modifiedCount > 0) {
+      Swal.fire({
+        title: "Comment Posted Successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   const handleUpvote = async () => {
@@ -102,6 +123,14 @@ function PostDetailes() {
               Total Vote:{" "}
               <span className="text-primary">
                 {postDetailesData?.upVotes - postDetailesData?.downVotes}
+              </span>
+            </p>
+            <p>
+              Total Comments:{" "}
+              <span className="text-primary">
+                {postDetailesData?.comments
+                  ? postDetailesData.comments.length
+                  : 0}
               </span>
             </p>
           </div>
