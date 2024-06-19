@@ -141,16 +141,26 @@ function MyPost() {
                                   forumPostDetails?.downVotes}
                               </td>
                               <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                <button
-                                  onClick={() => {
-                                    handleForumPostComment(
-                                      forumPostDetails?._id
-                                    );
-                                  }}
-                                  className="btn btn-accent"
-                                >
-                                  Comment
-                                </button>
+                                {forumPostDetails?.comments ? (
+                                  <button
+                                    onClick={() => {
+                                      handleForumPostComment(
+                                        forumPostDetails?._id
+                                      );
+                                    }}
+                                    className="btn btn-accent"
+                                  >
+                                    See Comment{" "}
+                                    {forumPostDetails?.comments?.length}
+                                  </button>
+                                ) : (
+                                  <button
+                                    disabled={!forumPostDetails?.comments}
+                                    className="btn btn-accent"
+                                  >
+                                    No Comment
+                                  </button>
+                                )}
                               </td>
                               <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                                 <button

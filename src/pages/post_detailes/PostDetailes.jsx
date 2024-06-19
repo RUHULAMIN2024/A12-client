@@ -37,7 +37,7 @@ function PostDetailes() {
     e.preventDefault();
     const form = e.target;
     const comment = form.comment.value;
-    if (!comment) {
+    if (comment === "") {
       Swal.fire({
         title: "Comment field is required",
         icon: "error",

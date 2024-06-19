@@ -18,6 +18,7 @@ function ForumComments() {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
   const [commentWithModal, setCommentWithModal] = useState("");
+  const [feedbackComment, setFeedBackComment] = useState({});
   const { data: forumPostComments = [] } = useQuery({
     queryKey: ["forumComments"],
     queryFn: async () => {
@@ -31,6 +32,18 @@ function ForumComments() {
   const handleReadMore = (modalData) => {
     setIsModalOpen(true);
     setCommentWithModal(modalData);
+  };
+  const handleFeedbackChange = (commentEmail, value) => {
+    setFeedBackComment((prevState) => ({
+      ...prevState,
+      [commentEmail]: { ...prevState[commentEmail], feedback: value },
+    }));
+  };
+  const handleReportClick = (commentEmail) => {
+    setFeedBackComment((prevState) => ({
+      ...prevState,
+      [commentEmail]: { ...prevState[commentEmail], reported: true },
+    }));
   };
   return (
     <>
@@ -79,7 +92,6 @@ function ForumComments() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {forumPostComments?.map((commentData, ind) => {
-                      console.log(commentData?.comment);
                       return (
                         <tr key={ind}>
                           <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -104,11 +116,12 @@ function ForumComments() {
                           </td>
                           <td>
                             <select
-                              //   value={selectedFeedback[comment._id] || ""}
-                              //   onChange={(e) =>
-                              //     handleFeedbackChange(comment._id, e.target.value)
-                              //   }
-                              //   disabled={comment.reported}
+                              onChange={(e) => {
+                                handleFeedbackChange(
+                                  commentData?.userEmail,
+                                  e.target.value
+                                );
+                              }}
                               className="border border-slate-200 outline-none px-2 py-1"
                             >
                               <option value="" disabled>
@@ -122,8 +135,21 @@ function ForumComments() {
                             </select>
                           </td>
                           <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            <button disabled className="btn btn-warning">
-                              Report
+                            <button
+                              onClick={() => {
+                                handleReportClick(commentData?.userEmail);
+                              }}
+                              disabled={
+                                !feedbackComment[commentData?.userEmail]
+                                  ?.feedback ||
+                                feedbackComment[commentData?.userEmail]
+                                  ?.reported
+                              }
+                              className="btn btn-warning"
+                            >
+                              {feedbackComment[commentData?.userEmail]?.reported
+                                ? "Reported"
+                                : "Report"}
                             </button>
                           </td>
                         </tr>
