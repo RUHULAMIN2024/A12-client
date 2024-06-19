@@ -169,48 +169,49 @@ function MyPost() {
             </div>
           </div>
         </div>
-
-        <div className="join container py-8 flex justify-center items-center">
-          <button
-            onClick={() => {
-              if (activePage > 0) {
-                setActivePage(activePage - 1);
-              }
-            }}
-            title="previous"
-            type="button"
-            className="join-item btn"
-          >
-            <IoArrowBack></IoArrowBack>
-          </button>
-          {pagesGenerate.map((page) => {
-            return (
-              <button
-                onClick={() => {
-                  setActivePage(page);
-                }}
-                key={page}
-                className={`${
-                  activePage === page && "btn-accent"
-                } join-item btn`}
-              >
-                {page + 1}
-              </button>
-            );
-          })}
-          <button
-            onClick={() => {
-              if (pagesGenerate.length > activePage + 1) {
-                setActivePage(activePage + 1);
-              }
-            }}
-            title="next"
-            type="button"
-            className="join-item btn"
-          >
-            <IoArrowForward></IoArrowForward>
-          </button>
-        </div>
+        {myForumPost.length > 5 && (
+          <div className="join container py-8 flex justify-center items-center">
+            <button
+              onClick={() => {
+                if (activePage > 0) {
+                  setActivePage(activePage - 1);
+                }
+              }}
+              title="previous"
+              type="button"
+              className="join-item btn"
+            >
+              <IoArrowBack></IoArrowBack>
+            </button>
+            {pagesGenerate.map((page) => {
+              return (
+                <button
+                  onClick={() => {
+                    setActivePage(page);
+                  }}
+                  key={page}
+                  className={`${
+                    activePage === page && "btn-accent"
+                  } join-item btn`}
+                >
+                  {page + 1}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => {
+                if (pagesGenerate.length > activePage + 1) {
+                  setActivePage(activePage + 1);
+                }
+              }}
+              title="next"
+              type="button"
+              className="join-item btn"
+            >
+              <IoArrowForward></IoArrowForward>
+            </button>
+          </div>
+        )}
       </section>
     </>
   );

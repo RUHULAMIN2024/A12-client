@@ -16,7 +16,7 @@ function ManageUsers() {
       setSortedDataCount(resData?.count);
     };
     getUsersCountFn();
-  });
+  }, [axiosSecure]);
   const { data: allUsers = [], refetch } = useQuery({
     queryKey: ["allUsers", activePage],
     queryFn: async () => {

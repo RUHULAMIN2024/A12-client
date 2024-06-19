@@ -122,13 +122,22 @@ function PostDetailes() {
             </button>
             <p className="flex gap-2 items-center">
               Share By:
-              <FacebookShareButton url={shareUrl}>
+              <FacebookShareButton
+                url={shareUrl}
+                title={postDetailesData?.postTitle}
+              >
                 <FacebookIcon size={32} round />
               </FacebookShareButton>
-              <TwitterShareButton url={shareUrl}>
+              <TwitterShareButton
+                url={shareUrl}
+                title={postDetailesData?.postTitle}
+              >
                 <TwitterIcon size={32} round />
               </TwitterShareButton>
-              <WhatsappShareButton url={shareUrl}>
+              <WhatsappShareButton
+                url={shareUrl}
+                title={postDetailesData?.postTitle}
+              >
                 <WhatsappIcon size={32} round />
               </WhatsappShareButton>
             </p>

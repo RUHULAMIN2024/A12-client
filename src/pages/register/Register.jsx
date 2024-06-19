@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  const { createUser, userUpdate } = useAuth();
+  const { userInfo, createUser, userUpdate } = useAuth();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -49,19 +49,38 @@ const Register = () => {
             };
             axiosPublic.post("/users", newUserCreate).then((res) => {
               if (res.data.insertedId) {
-                toast.success("User created successfully");
+                Swal.fire({
+                  icon: "success",
+                  title: "User Login Success",
+                  showConfirmButton: false,
+                  timer: 1000,
+                });
               }
             });
             navigate(from);
           })
           .catch(() => {
-            toast.error("An error occurred");
+            Swal.fire({
+              icon: "error",
+              title: "an error occurred",
+              showConfirmButton: false,
+              timer: 1000,
+            });
           });
       })
       .catch(() => {
-        toast.error("An error occurred");
+        Swal.fire({
+          icon: "error",
+          title: "an error occurred",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       });
   };
+
+  if (userInfo) {
+    return <Navigate to={from}></Navigate>;
+  }
 
   return (
     <div className="card-body rounded-xl shrink-0 w-full max-w-sm my-5 mx-auto bg-base-200">

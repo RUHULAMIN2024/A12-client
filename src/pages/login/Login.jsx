@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import SocialButton from "../../shared/SocialButton";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { loginUser } = useAuth();
+  const { userInfo, loginUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -23,13 +23,26 @@ const Login = () => {
     const { email, password } = data;
     loginUser(email, password)
       .then(() => {
-        toast.success("User Created Success");
         navigate(from);
+        Swal.fire({
+          icon: "success",
+          title: "User Login Success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       })
       .catch(() => {
-        toast.error("an error occurred ");
+        Swal.fire({
+          icon: "error",
+          title: "an error occurred",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       });
   };
+  if (userInfo) {
+    return <Navigate to={from}></Navigate>;
+  }
 
   return (
     <div className="card-body rounded-xl shrink-0 w-full max-w-sm my-5 mx-auto bg-base-200">
@@ -84,7 +97,7 @@ const Login = () => {
       </div>
       <div className="text-center mt-7 mb-2">
         <p> ====== continue with ======= </p>
-        <SocialButton></SocialButton>
+        <SocialButton navigate={from}></SocialButton>
       </div>
     </div>
   );

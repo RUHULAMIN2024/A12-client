@@ -9,9 +9,12 @@ const Tags = () => {
       </h2>
       <div className=" font-bold text-center text-primary grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {tags.map((tag, ind) => (
-          <button className="btn capitalize" key={ind}>
+          <span
+            className="inline-block cursor-text bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 my-2"
+            key={ind}
+          >
             {tag.tag}
-          </button>
+          </span>
         ))}
       </div>
     </section>

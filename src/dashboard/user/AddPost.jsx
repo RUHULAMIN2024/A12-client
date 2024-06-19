@@ -37,7 +37,7 @@ function AddPost() {
     };
     forumPostCountUserFn();
     checkUserIsBadge();
-  });
+  }, [axiosSecure, userInfo?.email]);
   const {
     register,
     handleSubmit,

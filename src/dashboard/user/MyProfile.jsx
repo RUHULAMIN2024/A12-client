@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import bronzeBadge from "../../assets/bronze-badge.png";
 import goldBadge from "../../assets/gold-badge.png";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -15,6 +17,17 @@ function MyProfile() {
       return resData?.isMember;
     },
   });
+  const [recentPost, setRecentPost] = useState([]);
+  useEffect(() => {
+    const myRecentsPostFn = async () => {
+      const res = await axiosSecure.get(
+        `/my-recent-forum-posts/${userInfo?.email}`
+      );
+      const resData = await res.data;
+      return setRecentPost(resData);
+    };
+    myRecentsPostFn();
+  }, [axiosSecure, userInfo?.email]);
   return (
     <>
       <Helmet>
@@ -56,6 +69,43 @@ function MyProfile() {
           </p>
         )}
       </div>
+      <h2 className="text-2xl uppercase md:text-3xl my-3 text-left font-bold">
+        Recent Posts
+      </h2>
+      {recentPost.length > 0 ? (
+        <div className="py-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {recentPost.map((myPost, ind) => {
+            return (
+              <div key={ind} className="p-4 shadow-md">
+                <h2 className="text-xl text-primary font-semibold">
+                  {" "}
+                  {myPost?.postTitle}
+                </h2>
+                <p> {myPost?.postDescription}</p>
+                <div className="flex flex-wrap justify-start items-center gap-4">
+                  {myPost?.postTag.map((myPostTag, ind) => {
+                    return (
+                      <span
+                        key={ind}
+                        className="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 my-2"
+                      >
+                        {myPostTag}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col space-y-3">
+          <h2 className="text-red-500">No post you have added!</h2>
+          <Link to={"/dashboard/add-post"}>
+            <button className="btn mr-auto btn-primary">Added New Post</button>
+          </Link>
+        </div>
+      )}
     </>
   );
 }

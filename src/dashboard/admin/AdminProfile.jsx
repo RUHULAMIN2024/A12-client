@@ -33,7 +33,7 @@ function AdminProfile() {
       setNumberOfUsers(resData?.count);
     };
     numberOfUsersFn();
-  });
+  }, [axiosSecure]);
   const { data: getAdminProfile } = useQuery({
     queryKey: ["getAdminProfile"],
     queryFn: async () => {

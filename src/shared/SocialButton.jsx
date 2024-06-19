@@ -1,14 +1,10 @@
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-
-function SocialButton() {
+function SocialButton({ navigate }) {
   const axiosPublic = useAxiosPublic();
   const { googleLogin, githubLogin } = useAuth();
-  const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
-
   return (
     <div className="flex justify-between">
       <button
@@ -23,10 +19,15 @@ function SocialButton() {
             };
             axiosPublic.post("/users", newUserCreate).then((res) => {
               if (res.data.insertedId) {
-                toast.success("User Created Success");
+                Swal.fire({
+                  icon: "success",
+                  title: "User Login Success",
+                  showConfirmButton: false,
+                  timer: 1000,
+                });
               }
             });
-            navigate(from);
+            navigate(navigate);
           })
         }
       >
@@ -43,9 +44,14 @@ function SocialButton() {
               badge: "bronze",
             };
             axiosPublic.post("/users", user).then(() => {
-              toast.success("User Created Success");
+              Swal.fire({
+                icon: "success",
+                title: "User Login Success",
+                showConfirmButton: false,
+                timer: 1000,
+              });
             });
-            navigate(from);
+            navigate(navigate);
           })
         }
       >
@@ -54,5 +60,7 @@ function SocialButton() {
     </div>
   );
 }
-
+SocialButton.propTypes = {
+  navigate: PropTypes.string,
+};
 export default SocialButton;
