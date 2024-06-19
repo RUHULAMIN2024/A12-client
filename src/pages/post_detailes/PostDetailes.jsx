@@ -37,6 +37,15 @@ function PostDetailes() {
     e.preventDefault();
     const form = e.target;
     const comment = form.comment.value;
+    if (!comment) {
+      Swal.fire({
+        title: "Comment field is required",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
     const res = await axiosPublic.post(`/forum-post-comment/${id}`, {
       forumMainPostId: id,
       userName: userInfo?.displayName,

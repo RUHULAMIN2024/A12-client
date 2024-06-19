@@ -1,8 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Modal from "react-modal";
-const comment =
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita cumque placeat itaque deleniti quidem et sed dolores molestias aliquam hic, quasi sit accusamus soluta nisi rerum, debitis nulla, consectetur vitae.";
+import { useParams } from "react-router-dom";
+import useAxiosPublic from "./../../hooks/useAxiosPublic";
 
 const customStyles = {
   content: {
@@ -14,10 +15,22 @@ const customStyles = {
   },
 };
 function ForumComments() {
+  const { id } = useParams();
+  const axiosPublic = useAxiosPublic();
+  const [commentWithModal, setCommentWithModal] = useState("");
+  const { data: forumPostComments = [] } = useQuery({
+    queryKey: ["forumComments"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/forum-posts-comments/${id}`);
+      const resData = await res.data;
+      return resData;
+    },
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleReadMore = () => {
+  const handleReadMore = (modalData) => {
     setIsModalOpen(true);
+    setCommentWithModal(modalData);
   };
   return (
     <>
@@ -26,7 +39,7 @@ function ForumComments() {
           <h2 className="text-lg font-medium text-gray-800 ">Post Comment</h2>
 
           <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full  ">
-            4
+            {forumPostComments?.length}
           </span>
         </div>
         <div className="flex flex-col mt-6">
@@ -65,46 +78,57 @@ function ForumComments() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
-                    <tr>
-                      <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        ruhul@amin.com
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  text-wrap break-words flex items-center flex-wrap  space-x-2">
-                        {comment.length > 20 ? (
-                          <>
-                            {comment.slice(0, 20)}...{" "}
-                            <button
-                              className="btn btn-accent btn-sm"
-                              onClick={handleReadMore}
+                    {forumPostComments?.map((commentData, ind) => {
+                      console.log(commentData?.comment);
+                      return (
+                        <tr key={ind}>
+                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            {commentData?.userEmail}
+                          </td>
+                          <td className="px-4 py-4 text-sm text-gray-500  text-wrap break-words flex items-center flex-wrap  space-x-2">
+                            {commentData?.comment.length > 20 ? (
+                              <>
+                                {commentData?.comment.slice(0, 20)}...{" "}
+                                <button
+                                  className="btn btn-accent btn-sm"
+                                  onClick={() =>
+                                    handleReadMore(commentData?.comment)
+                                  }
+                                >
+                                  <FaArrowRight></FaArrowRight>
+                                </button>
+                              </>
+                            ) : (
+                              <p>{commentData?.comment}</p>
+                            )}
+                          </td>
+                          <td>
+                            <select
+                              //   value={selectedFeedback[comment._id] || ""}
+                              //   onChange={(e) =>
+                              //     handleFeedbackChange(comment._id, e.target.value)
+                              //   }
+                              //   disabled={comment.reported}
+                              className="border border-slate-200 outline-none px-2 py-1"
                             >
-                              <FaArrowRight></FaArrowRight>
+                              <option value="" disabled>
+                                Select Feedback
+                              </option>
+                              <option value="Inappropriate">
+                                Inappropriate
+                              </option>
+                              <option value="Spam">Spam</option>
+                              <option value="Offensive">Offensive</option>
+                            </select>
+                          </td>
+                          <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            <button disabled className="btn btn-warning">
+                              Report
                             </button>
-                          </>
-                        ) : (
-                          { comment }
-                        )}
-                      </td>
-                      <td>
-                        <select
-                          //   value={selectedFeedback[comment._id] || ""}
-                          //   onChange={(e) =>
-                          //     handleFeedbackChange(comment._id, e.target.value)
-                          //   }
-                          //   disabled={comment.reported}
-                          className="border border-slate-200 outline-none px-2 py-1"
-                        >
-                          <option value="" disabled>
-                            Select Feedback
-                          </option>
-                          <option value="Inappropriate">Inappropriate</option>
-                          <option value="Spam">Spam</option>
-                          <option value="Offensive">Offensive</option>
-                        </select>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        <button className="btn btn-warning">Report</button>
-                      </td>
-                    </tr>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -126,7 +150,7 @@ function ForumComments() {
           >
             close
           </button>
-          <div>{comment}</div>
+          <div>{commentWithModal}</div>
         </Modal>
       </section>
     </>
