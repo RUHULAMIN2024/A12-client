@@ -56,8 +56,8 @@ const Register = () => {
                   timer: 1000,
                 });
               }
+              navigate(from);
             });
-            navigate(from);
           })
           .catch(() => {
             Swal.fire({

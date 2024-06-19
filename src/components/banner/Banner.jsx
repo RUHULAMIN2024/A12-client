@@ -1,8 +1,12 @@
-const Banner = () => {
+import PropTypes from "prop-types";
+
+const Banner = ({ setBannerSearchTag }) => {
   const handleBannerSearch = (e) => {
     e.preventDefault();
-    const searchTag = e.target.searchTag.value;
-    console.log(searchTag);
+    const form = e.target;
+    const searchTag = form.searchTag.value;
+    setBannerSearchTag(searchTag);
+    form.reset();
   };
 
   return (
@@ -40,5 +44,7 @@ const Banner = () => {
     </section>
   );
 };
-
+Banner.propTypes = {
+  setBannerSearchTag: PropTypes.func.isRequired,
+};
 export default Banner;

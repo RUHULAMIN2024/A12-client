@@ -68,7 +68,7 @@ function PostDetailes() {
             </span>
           </div>
           <div className="mt-2">
-            <h2 className="text-xl font-bold text-gray-700 hover:text-gray-600  hover:underline">
+            <h2 className="text-xl font-bold text-gray-700 hover:text-gray-600 ">
               {postDetailesData?.postTitle}
             </h2>
             <p className="mt-2 text-gray-600 ">

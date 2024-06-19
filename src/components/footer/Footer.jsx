@@ -132,7 +132,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="py-6 text-sm text-center text-gray-400">
-        © 1968 Company Co. All rights reserved.
+        © {new Date().getFullYear()} Company Co. All rights reserved.
       </div>
     </footer>
   );
