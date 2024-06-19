@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "./../../hooks/useAuth";
-import useAxiosPublic from "./../../hooks/useAxiosPublic";
 
 function CheckOutForm() {
   const navigate = useNavigate();
@@ -14,20 +14,20 @@ function CheckOutForm() {
 
   const [paymentSubmitErrorUser, setPaymentSubmitErrorUser] = useState(null);
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { userInfo } = useAuth();
 
   useEffect(() => {
     const getMemberShipIntent = async () => {
-      const res = await axiosPublic.post("/create-membership-intent", {
+      const res = await axiosSecure.post("/create-membership-intent", {
         membershipfee: 50,
       });
       const resData = await res.data;
-      setGetClientSecret(resData.clientSecret);
+      setGetClientSecret(resData?.clientSecret);
     };
     getMemberShipIntent();
-  }, [axiosPublic]);
+  }, [axiosSecure]);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -72,7 +72,7 @@ function CheckOutForm() {
       return;
     }
     if (paymentIntent.status === "succeeded") {
-      const res = await axiosPublic.patch(`/get-gold-badge/${userInfo?.email}`);
+      const res = await axiosSecure.patch(`/get-gold-badge/${userInfo?.email}`);
       const resData = await res.data;
       if (resData.modifiedCount > 0) {
         Swal.fire({
@@ -83,7 +83,7 @@ function CheckOutForm() {
           cancelButtonColor: "#d33",
           confirmButtonText: "OK",
         });
-        navigate("/");
+        navigate("/dashboard/my-profile");
       } else {
         Swal.fire({
           title: "Oops!",
