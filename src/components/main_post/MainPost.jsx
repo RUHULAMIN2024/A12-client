@@ -124,7 +124,7 @@ function MainPost({ setBannerSearchTag, bannerSearchTag }) {
         </div>
       )}
 
-      {forumPostsData.length > 5 && (
+      {forumPostsData && (
         <div className="join container py-8 flex justify-center items-center">
           <button
             onClick={() => {
