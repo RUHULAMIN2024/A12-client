@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 const RADIAN = Math.PI / 180;
@@ -30,26 +30,21 @@ const renderCustomizedLabel = ({
 function AdminProfileChart({ data }) {
   return (
     <>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={500} height={500}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={100}
-            fill="#8884d8"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+      <PieChart width={400} height={500}>
+        <Pie
+          data={data}
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={100}
+          fill="#8884d8"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
     </>
   );
 }

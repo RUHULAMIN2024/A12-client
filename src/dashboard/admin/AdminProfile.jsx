@@ -17,7 +17,7 @@ function AdminProfile() {
   const data = [
     { name: "All Users", value: numberOfUsers },
     { name: "All Posts", value: numberOfPost },
-    { name: "All Comments", value: 5 },
+    { name: "All Comments", value: numberOfComments },
   ];
   const { tagsRefetch } = useTags();
   useEffect(() => {
@@ -33,6 +33,12 @@ function AdminProfile() {
       setNumberOfUsers(resData?.count);
     };
     numberOfUsersFn();
+    const numberOfCommentsFn = async () => {
+      const res = await axiosSecure.get("/number-of-comments");
+      const resData = await res.data;
+      setNumberOfComments(resData?.count);
+    };
+    numberOfCommentsFn();
   }, [axiosSecure]);
   const { data: getAdminProfile } = useQuery({
     queryKey: ["getAdminProfile"],
